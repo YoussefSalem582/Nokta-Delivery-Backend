@@ -67,6 +67,25 @@ return [
             'success' => 'Ride offers retrieved successfully.',
         ],
     ],
+    'deliveries' => [
+        'list' => [
+            'success' => 'Deliveries retrieved successfully.',
+        ],
+        'active' => [
+            'success' => 'Active delivery retrieved successfully.',
+            'not_found' => 'No active delivery found.',
+        ],
+        'fetch' => [
+            'success' => 'Delivery retrieved successfully.',
+        ],
+        'not_found' => 'Delivery not found.',
+        'create' => [
+            'success' => 'Delivery created successfully.',
+        ],
+        'status_updated' => [
+            'success' => 'Delivery status updated successfully.',
+        ],
+    ],
     'common' => [
         'internal_error' => 'An internal server error occurred.',
     ],
