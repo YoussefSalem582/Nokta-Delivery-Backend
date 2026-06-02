@@ -10,6 +10,7 @@ use App\Models\DeviceToken;
 use App\Services\AuthService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 use Illuminate\Http\Request;
 
 /**
@@ -40,6 +41,14 @@ class AuthController extends Controller
     /**
      * Login existing user
      */
+    #[OA\Post(
+        path: '/api/v1/auth/login',
+        summary: 'Login user',
+        tags: ['Auth'],
+        responses: [
+            new OA\Response(response: 200, description: 'Successful login')
+        ]
+    )]
     public function login(LoginRequest $request): JsonResponse
     {
         $user = $this->authService->login($request->email, $request->password);
