@@ -1,0 +1,25 @@
+# Nokta Delivery Backend
+
+Backend services for the Nokta Delivery application.
+
+## Prerequisites
+
+- Node.js (v18+ recommended)
+- npm / yarn / pnpm
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Build for production:
+   ```bash
+   npm run build
+   ```
