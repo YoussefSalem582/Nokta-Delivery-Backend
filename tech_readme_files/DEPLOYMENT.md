@@ -52,14 +52,31 @@ Configure orchestrators to use `/api/health/ready` as the readiness probe. A `50
 - Rate limiting is enabled on auth routes; tune limits in `auth.controller.php` if needed.
 - Firebase: without credentials, notifications remain `PENDING` and are logged at debug level.
 
-## Build artifact
+## Deploying for Free (Render + Supabase + Upstash)
+
+This repository is pre-configured to be deployed for **free** using [Render.com](https://render.com).
+
+To fit within Render's free tier, the `Dockerfile` uses `supervisord` to run the Laravel Web Server, Queue Worker, and Reverb WebSocket server inside a **single** container.
+
+### Step 1: External Databases
+Render's free database expires after 90 days, and they do not offer free Redis. You should provision these externally:
+1. **PostgreSQL**: Create a free database on [Supabase](https://supabase.com). Copy the connection string.
+2. **Redis**: Create a free serverless Redis instance on [Upstash](https://upstash.com). Copy the connection string.
+
+### Step 2: Render Deployment
+1. Go to [Render.com](https://render.com) and link your GitHub repository.
+2. Create a new **Blueprint Instance** and point it to the `render.yaml` file in this repository.
+3. Render will prompt you to provide values for `DATABASE_URL` and `REDIS_URL`. Paste the connection strings from Step 1.
+4. Deploy! Render will automatically build the `Dockerfile`, run `php artisan migrate`, and start the web server, queue worker, and Reverb.
+
+> [!WARNING]
+> Render's free tier spins down the container after 15 minutes of inactivity. When it spins down, any active WebSocket (Reverb) connections will disconnect until the next HTTP request wakes the server up.
+
+## Build artifact (Docker)
 
 ```powershell
-npm ci
-
-node dist/main.js
+docker build -t nokta-api .
+docker run -p 10000:10000 -p 8080:8080 --env-file .env nokta-api
 ```
 
 Or use the `api` service in `docker-compose.yml`, which builds from the root `Dockerfile`.
-
-

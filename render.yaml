@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: nokta-api
+    env: docker
+    region: frankfurt
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: CACHE_STORE
+        value: redis
+      - key: QUEUE_CONNECTION
+        value: redis
+      - key: SESSION_DRIVER
+        value: redis
+      - key: REVERB_HOST
+        value: 0.0.0.0
+      - key: REVERB_PORT
+        value: 8080
