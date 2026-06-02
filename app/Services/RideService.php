@@ -118,6 +118,12 @@ class RideService
             event(new \App\Events\RideStatusUpdated($ride));
 
             // NOTE: In Phase 6 we broadcast this change to the rider via Push notifications too
+            \App\Jobs\SendPushNotification::dispatch(
+                $ride->rider_id,
+                'Ride Update',
+                "Your ride status has changed to: {$newStatus}",
+                ['ride_id' => $ride->id, 'status' => $newStatus]
+            );
 
             return $ride;
         });

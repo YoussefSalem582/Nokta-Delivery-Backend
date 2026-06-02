@@ -91,6 +91,13 @@ class DeliveryService
             // Broadcast status update
             event(new \App\Events\DeliveryStatusUpdated($delivery));
 
+            \App\Jobs\SendPushNotification::dispatch(
+                $delivery->sender_id,
+                'Delivery Update',
+                "Your delivery status has changed to: {$newStatus}",
+                ['delivery_id' => $delivery->id, 'status' => $newStatus]
+            );
+
             return $delivery;
         });
     }
