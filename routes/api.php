@@ -63,4 +63,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('{id}/status', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'updateStatus']);
         Route::post('{id}/location', [\App\Http\Controllers\Api\V1\LocationController::class, 'updateDeliveryLocation'])->middleware('role:COURIER');
     });
+
+    // Offline Sync
+    Route::prefix('sync')->group(function () {
+        Route::post('actions', [\App\Http\Controllers\Api\V1\SyncController::class, 'syncActions']);
+        Route::get('reconcile', [\App\Http\Controllers\Api\V1\SyncController::class, 'reconcile']);
+    });
 });
