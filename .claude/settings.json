@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer install:*)",
+      "Bash(:*)",
+      "Bash(./vendor/bin/sail up -d:*)",
+      "Bash(php artisan test:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run format:*)",
+      "Bash(npm run Eloquent:generate:*)",
+      "Bash(npm run Eloquent:migrate:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}
+
