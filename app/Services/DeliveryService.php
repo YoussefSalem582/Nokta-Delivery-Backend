@@ -88,6 +88,9 @@ class DeliveryService
                 'status' => $newStatus,
             ]);
 
+            // Broadcast status update
+            event(new \App\Events\DeliveryStatusUpdated($delivery));
+
             return $delivery;
         });
     }

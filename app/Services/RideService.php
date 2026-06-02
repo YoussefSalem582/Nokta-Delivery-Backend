@@ -114,7 +114,10 @@ class RideService
                 'status' => $newStatus,
             ]);
 
-            // NOTE: In Phase 5/6 we broadcast this change to the rider via WebSockets/Push
+            // Broadcast status update
+            event(new \App\Events\RideStatusUpdated($ride));
+
+            // NOTE: In Phase 6 we broadcast this change to the rider via Push notifications too
 
             return $ride;
         });

@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('request', [\App\Http\Controllers\Api\V1\TripController::class, 'requestRide']);
         Route::get('{id}', [\App\Http\Controllers\Api\V1\TripController::class, 'show']);
         Route::patch('{id}/status', [\App\Http\Controllers\Api\V1\TripController::class, 'updateStatus']);
+        Route::post('{id}/location', [\App\Http\Controllers\Api\V1\LocationController::class, 'updateRideLocation'])->middleware('role:DRIVER');
     });
 
     // Alias for rides to match Flutter endpoint sometimes expected as 'rides/estimate-fare'
@@ -60,5 +61,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'store']);
         Route::get('{id}', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'show']);
         Route::patch('{id}/status', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'updateStatus']);
+        Route::post('{id}/location', [\App\Http\Controllers\Api\V1\LocationController::class, 'updateDeliveryLocation'])->middleware('role:COURIER');
     });
 });
