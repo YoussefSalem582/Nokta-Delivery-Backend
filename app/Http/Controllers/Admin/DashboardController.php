@@ -160,4 +160,76 @@ class DashboardController extends Controller
         $delivery->load(['sender', 'courier']);
         return view('admin.deliveries.show', compact('delivery'));
     }
+
+    /**
+     * Export data (Placeholder)
+     */
+    public function export()
+    {
+        return back()->with('success', __('admin.export_success'));
+    }
+
+    /**
+     * Suspend a user
+     */
+    public function suspendUser(User $user)
+    {
+        // $user->update(['status' => 'SUSPENDED']); // Assuming a status field
+        return back()->with('success', __('admin.user_suspended_success'));
+    }
+
+    /**
+     * Cancel a ride
+     */
+    public function cancelRide(Ride $ride)
+    {
+        $ride->update(['status' => 'CANCELLED']);
+        return back()->with('success', __('admin.ride_cancelled_success'));
+    }
+
+    /**
+     * Cancel a delivery
+     */
+    public function cancelDelivery(Delivery $delivery)
+    {
+        $delivery->update(['status' => 'CANCELLED']);
+        return back()->with('success', __('admin.delivery_cancelled_success'));
+    }
+
+    /**
+     * Show the admin profile.
+     */
+    public function profile()
+    {
+        // For now, returning a static view since there's no Admin Auth model yet
+        return view('admin.profile');
+    }
+
+    public function updateProfile()
+    {
+        return back()->with('success', __('admin.save_changes'));
+    }
+
+    /**
+     * Show the admin settings.
+     */
+    public function settings()
+    {
+        return view('admin.settings');
+    }
+
+    public function updateSettings()
+    {
+        return back()->with('success', __('admin.save_all_settings'));
+    }
+
+    /**
+     * Logout the admin.
+     */
+    public function logout()
+    {
+        // Placeholder for logout logic (e.g., Auth::guard('admin')->logout())
+        // Currently just redirects to home
+        return redirect('/');
+    }
 }
