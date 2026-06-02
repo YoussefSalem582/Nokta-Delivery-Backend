@@ -11,6 +11,12 @@ Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
+        Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
+    });
+
+    // Public Driver Routes
+    Route::prefix('driver')->group(function () {
+        Route::post('register', [AuthController::class, 'driverRegister']);
     });
 
     // Protected API v1 Routes
@@ -25,6 +31,8 @@ Route::prefix('v1')->group(function () {
 
         // Driver protected routes
         Route::middleware('role:DRIVER')->prefix('driver')->group(function () {
+            Route::get('profile', [ProfileController::class, 'driverProfile']);
+            Route::patch('availability', [\App\Http\Controllers\Api\V1\DriverController::class, 'updateAvailability']);
             Route::get('offers', [\App\Http\Controllers\Api\V1\DriverController::class, 'offers']);
             Route::post('offers/{id}/accept', [\App\Http\Controllers\Api\V1\DriverController::class, 'acceptOffer']);
             Route::post('offers/{id}/decline', [\App\Http\Controllers\Api\V1\DriverController::class, 'declineOffer']);
@@ -38,8 +46,15 @@ Route::middleware('auth:sanctum')->group(function () {
     // Profile
     Route::get('profile', [ProfileController::class, 'show']);
 
+    // Riders
+    Route::get('riders', [\App\Http\Controllers\Api\V1\RiderController::class, 'index']);
+
+    // Orders
+    Route::get('orders', [\App\Http\Controllers\Api\V1\OrderController::class, 'index']);
+
     // Drivers
     Route::get('drivers', [\App\Http\Controllers\Api\V1\DriverController::class, 'index']);
+    Route::get('drivers/{id}/reviews', [\App\Http\Controllers\Api\V1\DriverController::class, 'reviews']);
 
     // Rides (Trips)
     Route::prefix('trips')->group(function () {
@@ -60,6 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('active', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'active']);
         Route::post('/', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'store']);
         Route::get('{id}', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'show']);
+        Route::get('{id}/tracking', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'tracking']);
         Route::patch('{id}/status', [\App\Http\Controllers\Api\V1\DeliveryController::class, 'updateStatus']);
         Route::post('{id}/location', [\App\Http\Controllers\Api\V1\LocationController::class, 'updateDeliveryLocation'])->middleware('role:COURIER');
     });

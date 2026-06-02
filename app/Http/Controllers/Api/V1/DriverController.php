@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ride;
+use App\Models\Review;
 use App\Services\RideService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -89,5 +90,38 @@ class DriverController extends Controller
         // we'd mark it declined there. For MVP, just return success.
         
         return $this->buildResponse('rides.decline.success');
+    }
+
+    /**
+     * Update driver availability
+     */
+    public function updateAvailability(Request $request): JsonResponse
+    {
+        $request->validate([
+            'is_available' => 'required|boolean',
+        ]);
+
+        $profile = $request->user()->driverProfile;
+        
+        if ($profile) {
+            $profile->availability = $request->is_available ? 'ONLINE' : 'OFFLINE';
+            $profile->save();
+        }
+
+        return $this->buildResponse('drivers.availability.success', [
+            'availability' => $profile ? $profile->availability : 'OFFLINE',
+        ]);
+    }
+
+    /**
+     * Get reviews for a specific driver
+     */
+    public function reviews(string $id, Request $request): JsonResponse
+    {
+        $reviews = Review::where('driver_id', $id)
+            ->latest()
+            ->get();
+
+        return $this->buildResponse('drivers.reviews.success', $reviews);
     }
 }

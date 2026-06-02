@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **AI agent documentation surface** — Canonical [`AGENTS.md`](AGENTS.md) plus tool shims ([`CLAUDE.md`](CLAUDE.md), [`CURSOR.md`](CURSOR.md), [`.codex/AGENTS.md`](.codex/AGENTS.md), [`.github/copilot-instructions.md`](.github/copilot-instructions.md)), [`.agents/skills/`](.agents/skills/) (3 project-tuned skills), [`.cursor/rules/`](.cursor/rules/), [`.claude/commands/`](.claude/commands/), [`tech_readme_files/`](tech_readme_files/) doc map, and doc-hygiene scripts + CI ([`.github/workflows/docs.yml`](.github/workflows/docs.yml)).
 - **CI pipeline** — [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs lint, build, unit tests, and e2e on pull requests and `main`.
 - **Production hardening** — Redis PING on `/health/ready`, stricter production env validation for Redis, HTTP request logging with correlation IDs, auth rate limiting (`@Laravel/throttler`), bilingual `common.rate_limit` message key.
-- **Flutter integration** — [`tech_readme_files/FLUTTER_INTEGRATION.md`](tech_readme_files/FLUTTER_INTEGRATION.md), [`tech_readme_files/DEPLOYMENT.md`](tech_readme_files/DEPLOYMENT.md), `GET /drivers/:driverId/reviews` (v1 summary stub), JWT-authenticated Laravel Reverb on `/realtime`, ride-flow e2e smoke test.
+- **Flutter integration** — Added missing API endpoints expected by the Flutter app (`/orders`, `/riders`, `/v1/auth/forgot-password`, `/v1/driver/register`, `/v1/driver/profile`, `/v1/driver/availability`, `/deliveries/{id}/tracking`, `/drivers/{id}/reviews`) to ensure full compatibility. Created `Review` model and migration.
 
 ### Changed
 

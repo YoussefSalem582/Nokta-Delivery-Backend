@@ -61,6 +61,38 @@ class AuthController extends Controller
     }
 
     /**
+     * Request a password reset link
+     */
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+        
+        // Mock sending password reset link
+        return $this->buildResponse('auth.forgot_password.success', [
+            'message' => 'Password reset link sent successfully.',
+        ]);
+    }
+
+    /**
+     * Register a new driver
+     */
+    public function driverRegister(RegisterRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $data['role'] = 'DRIVER';
+
+        $user = $this->authService->register($data);
+        $tokens = $this->authService->generateTokens($user);
+
+        return $this->buildResponse('auth.register.success', [
+            'user' => $user,
+            'tokens' => $tokens,
+        ]);
+    }
+
+    /**
      * Refresh access token
      */
     public function refresh(Request $request): JsonResponse

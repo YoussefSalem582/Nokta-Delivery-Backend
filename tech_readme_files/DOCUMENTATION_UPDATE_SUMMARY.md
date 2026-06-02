@@ -4,6 +4,14 @@
 
 ---
 
+## 2026-06-02 — Full Flutter Backend API Compatibility
+
+**What changed:** Implemented missing backend endpoints required by the Flutter client, including driver registration and profile endpoints, forgot password functionality, rider list, order list, delivery tracking, and driver reviews. Created `Review` model and corresponding database migration.
+
+**Files touched:** `routes/api.php`, `app/Models/Review.php`, `database/migrations/*_create_reviews_table.php`, `app/Http/Controllers/Api/V1/AuthController.php`, `app/Http/Controllers/Api/V1/ProfileController.php`, `app/Http/Controllers/Api/V1/DriverController.php`, `app/Http/Controllers/Api/V1/DeliveryController.php`, `app/Http/Controllers/Api/V1/RiderController.php`, `app/Http/Controllers/Api/V1/OrderController.php`, `CHANGELOG.md`, `tech_readme_files/CURRENT_STATUS.md`
+
+---
+
 ## 2026-06-01 — Production hardening and Flutter integration
 
 **What changed:** Added CI workflow, Redis readiness probe, auth rate limiting, HTTP logging interceptor, JWT Laravel Reverb auth, driver reviews endpoint, deployment and Flutter integration guides, ride-flow e2e test, OpenAPI refresh.

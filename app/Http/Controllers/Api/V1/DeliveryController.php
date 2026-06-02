@@ -117,4 +117,19 @@ class DeliveryController extends Controller
 
         return $this->buildResponse('deliveries.status_updated.success', $this->deliveryService->toDeliveryJson($updatedDelivery));
     }
+
+    /**
+     * Get tracking info for a delivery
+     */
+    public function tracking(string $id, Request $request): JsonResponse
+    {
+        $delivery = Delivery::with(['courier', 'locations'])->find($id);
+
+        if (! $delivery) {
+            return $this->buildErrorResponse('deliveries.not_found', null, 404);
+        }
+
+        // Just returning the delivery payload for now, as it contains status and location history
+        return $this->buildResponse('deliveries.tracking.success', $this->deliveryService->toDeliveryJson($delivery));
+    }
 }

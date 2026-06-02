@@ -39,4 +39,12 @@ class ProfileController extends Controller
 
         return $this->buildResponse('profile.fetch.success', $profileData);
     }
+
+    /**
+     * Get the current driver profile.
+     */
+    public function driverProfile(Request $request): JsonResponse
+    {
+        return $this->show($request);
+    }
 }

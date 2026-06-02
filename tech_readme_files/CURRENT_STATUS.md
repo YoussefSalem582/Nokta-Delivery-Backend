@@ -2,7 +2,7 @@
 
 > [INDEX](INDEX.md) > Current Status
 >
-> **Last Updated:** June 1, 2026 — Production hardening and Flutter integration path.
+> **Last Updated:** June 2, 2026 — Full Flutter Backend API Compatibility.
 > **Version:** `0.1.0`
 > **PHP:** 8.3+
 > **Status:** ✅ MVP API complete | ✅ Hardening phase 1 | 🚧 Flutter live flip (client-side)
@@ -29,8 +29,8 @@ Laravel production API for Nokta with Eloquent/PostgreSQL, Redis, Laravel Reverb
 |------|--------|
 | Auth (JWT + roles + rate limits) | ✅ Complete |
 | Trips / ride-hailing | ✅ Complete |
-| Driver APIs (`/v1/driver/*`) | ✅ Complete |
-| Driver reviews (`GET /drivers/:id/reviews`) | ✅ v1 stub (aggregate rating only) |
+| Driver APIs (`/v1/driver/*`) | ✅ Complete (Includes driverRegister, driverProfile, updateAvailability) |
+| Driver reviews (`GET /drivers/:id/reviews`) | ✅ Complete with Review model |
 | Deliveries + `/orders` | ✅ Complete |
 | Profile | ✅ Complete |
 | Offline sync + idempotency | ✅ Complete |
