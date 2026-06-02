@@ -11,6 +11,8 @@
 > | OpenAI Codex CLI | [.codex/AGENTS.md](.codex/AGENTS.md) | Approval-mode mapping, `apply_patch` preference |
 > | GitHub Copilot | [.github/copilot-instructions.md](.github/copilot-instructions.md) | Inline-completion + Copilot-Chat conventions |
 > | Cursor | [CURSOR.md](CURSOR.md) + [.cursor/rules/](.cursor/rules/) `*.mdc` | Auto-attached rule scopes |
+> | Gemini | [GEMINI.md](GEMINI.md) | Tool-use rules, response style, approved commands |
+> | Antigravity | [ANTIGRAVITY.md](ANTIGRAVITY.md) | Tool-use rules, response style, approved commands |
 >
 > **If you edit project conventions, edit this file.** Shims should never grow back into full mirrors.
 <!-- canonical-banner:end -->
