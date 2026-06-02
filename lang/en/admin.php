@@ -117,4 +117,5 @@ return [
     'export_success' => 'Export started successfully.',
     'theme_dark' => 'Dark Mode',
     'theme_light' => 'Light Mode',
+    'theme_system' => 'System Default',
 ];

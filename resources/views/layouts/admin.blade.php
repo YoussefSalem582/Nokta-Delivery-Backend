@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}" class="{{ session('theme', 'light') }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nokta Admin Dashboard</title>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('assets/logo.svg') }}">
+    
+    <!-- Theme Detection Script (to prevent FOUC) -->
+    <script>
+        (function() {
+            const theme = "{{ session('theme', 'system') }}";
+            if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            // Listen for system preference changes if in system mode
+            if (theme === 'system') {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    if (e.matches) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                });
+            }
+        })();
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,29 +59,29 @@
 
         <!-- Sidebar -->
         <aside :class="sidebarOpen ? 'translate-x-0' : (document.dir === 'rtl' ? 'translate-x-full' : '-translate-x-full')" class="fixed inset-y-0 z-30 w-64 bg-sidebar text-white transition-transform duration-300 lg:static lg:translate-x-0 flex flex-col ltr:left-0 rtl:right-0">
-            <div class="flex items-center justify-center h-20 border-b border-gray-700 bg-white dark:bg-slate-800">
+            <div class="flex items-center justify-center h-20 border-b border-gray-700 bg-white dark:bg-slate-800 transition-colors">
                 <a href="{{ url('/admin/dashboard') }}" class="flex items-center justify-center w-full h-full p-4">
                     <img src="{{ asset('assets/logo.svg') }}" alt="Nokta Logo" class="h-10 w-auto object-contain">
                 </a>
             </div>
 
             <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-                <a href="{{ url('/admin/dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/dashboard') ? 'bg-primary text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
+                <a href="{{ url('/admin/dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/dashboard') ? 'bg-primary text-white shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     {{ __('admin.dashboard') }}
                 </a>
                 
-                <a href="{{ url('/admin/users') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/users*') ? 'bg-primary text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
+                <a href="{{ url('/admin/users') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/users*') ? 'bg-primary text-white shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     {{ __('admin.users') }}
                 </a>
 
-                <a href="{{ url('/admin/rides') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/rides*') ? 'bg-primary text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
+                <a href="{{ url('/admin/rides') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/rides*') ? 'bg-primary text-white shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     {{ __('admin.rides') }}
                 </a>
 
-                <a href="{{ url('/admin/deliveries') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/deliveries*') ? 'bg-primary text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
+                <a href="{{ url('/admin/deliveries') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->is('admin/deliveries*') ? 'bg-primary text-white shadow-md' : 'text-gray-300 hover:bg-gray-700 hover:text-white transition' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                     {{ __('admin.deliveries') }}
                 </a>
@@ -74,16 +98,33 @@
                 
                 <div class="flex-1 flex justify-end items-center gap-4">
                     
-                    <!-- Theme Toggle -->
-                    <a href="{{ url('/admin/theme/' . (session('theme') == 'dark' ? 'light' : 'dark')) }}" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition" title="{{ session('theme') == 'dark' ? __('admin.theme_light') : __('admin.theme_dark') }}">
-                        @if(session('theme') == 'dark')
-                            <!-- Sun icon -->
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        @else
-                            <!-- Moon icon -->
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                        @endif
-                    </a>
+                    <!-- Theme Dropdown -->
+                    <div class="relative" x-data="{ themeOpen: false }">
+                        <button @click="themeOpen = !themeOpen" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition flex items-center gap-2" title="Theme Settings">
+                            @if(session('theme', 'system') == 'dark')
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                            @elseif(session('theme', 'system') == 'light')
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            @else
+                                <!-- System Icon -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            @endif
+                        </button>
+                        <div x-show="themeOpen" @click.away="themeOpen = false" class="absolute {{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} mt-2 w-36 bg-white dark:bg-slate-800 rounded-md shadow-lg py-1 z-50 border dark:border-slate-700" style="display: none;">
+                            <a href="{{ url('/admin/theme/system') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ session('theme', 'system') == 'system' ? 'font-bold text-primary dark:text-indigo-400' : '' }}">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                {{ __('admin.theme_system') }}
+                            </a>
+                            <a href="{{ url('/admin/theme/light') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ session('theme', 'system') == 'light' ? 'font-bold text-primary dark:text-indigo-400' : '' }}">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                {{ __('admin.theme_light') }}
+                            </a>
+                            <a href="{{ url('/admin/theme/dark') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ session('theme', 'system') == 'dark' ? 'font-bold text-primary dark:text-indigo-400' : '' }}">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                                {{ __('admin.theme_dark') }}
+                            </a>
+                        </div>
+                    </div>
 
                     <!-- Language Toggle -->
                     <div class="relative" x-data="{ langOpen: false }">
@@ -92,8 +133,8 @@
                             {{ strtoupper(app()->getLocale()) }}
                         </button>
                         <div x-show="langOpen" @click.away="langOpen = false" class="absolute {{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} mt-2 w-32 bg-white dark:bg-slate-800 rounded-md shadow-lg py-1 z-50 border dark:border-slate-700" style="display: none;">
-                            <a href="{{ url('/admin/locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ app()->getLocale() == 'en' ? 'font-bold' : '' }}">English</a>
-                            <a href="{{ url('/admin/locale/ar') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ app()->getLocale() == 'ar' ? 'font-bold' : '' }}">العربية</a>
+                            <a href="{{ url('/admin/locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ app()->getLocale() == 'en' ? 'font-bold text-primary dark:text-indigo-400' : '' }}">English</a>
+                            <a href="{{ url('/admin/locale/ar') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition {{ app()->getLocale() == 'ar' ? 'font-bold text-primary dark:text-indigo-400' : '' }}">العربية</a>
                         </div>
                     </div>
 
@@ -102,7 +143,7 @@
                     <!-- Profile Dropdown -->
                     <div class="relative" x-data="{ dropdownOpen: false }">
                         <button @click="dropdownOpen = !dropdownOpen" class="flex items-center gap-3 focus:outline-none">
-                            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                            <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300 flex items-center justify-center font-bold border border-indigo-200 dark:border-indigo-800">
                                 AU
                             </div>
                             <div class="hidden md:block text-left {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }}">
@@ -114,8 +155,8 @@
                         <div x-show="dropdownOpen" @click.away="dropdownOpen = false" class="absolute {{ app()->getLocale() == 'ar' ? 'left-0' : 'right-0' }} mt-2 w-48 bg-white dark:bg-slate-800 rounded-md shadow-lg py-1 z-50 border dark:border-slate-700" style="display: none;">
                             <a href="{{ url('/admin/profile') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition">{{ __('admin.profile') }}</a>
                             <a href="{{ url('/admin/settings') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition">{{ __('admin.settings') }}</a>
-                            <hr class="dark:border-slate-700">
-                            <a href="{{ url('/admin/logout') }}" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition">{{ __('admin.logout') }}</a>
+                            <hr class="dark:border-slate-700 my-1">
+                            <a href="{{ url('/admin/logout') }}" class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-slate-700 transition font-medium">{{ __('admin.logout') }}</a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +166,7 @@
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-slate-900 transition-colors p-6">
                 
                 @if(session('success'))
-                    <div class="mb-6 p-4 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 flex items-center justify-between">
+                    <div class="mb-6 p-4 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 flex items-center justify-between shadow-sm">
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             {{ session('success') }}

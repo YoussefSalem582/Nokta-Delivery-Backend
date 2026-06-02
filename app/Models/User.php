@@ -75,4 +75,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(DeviceToken::class);
     }
+
+    public function riderRides()
+    {
+        return $this->hasMany(Ride::class, 'rider_id');
+    }
+
+    public function driverRides()
+    {
+        return $this->hasMany(Ride::class, 'driver_id');
+    }
+
+    public function senderDeliveries()
+    {
+        return $this->hasMany(Delivery::class, 'customer_id');
+    }
+
+    public function courierDeliveries()
+    {
+        return $this->hasMany(Delivery::class, 'courier_id');
+    }
 }

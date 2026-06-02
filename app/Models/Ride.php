@@ -15,4 +15,14 @@ class Ride extends Model
 
     /** @use HasFactory<\Database\Factories\RideFactory> */
     use HasFactory;
+
+    public function rider()
+    {
+        return $this->belongsTo(User::class, 'rider_id');
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(User::class, 'driver_id');
+    }
 }

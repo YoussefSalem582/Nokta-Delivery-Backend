@@ -18,7 +18,7 @@ Route::prefix('admin')->middleware([\Illuminate\Session\Middleware\StartSession:
     });
 
     Route::get('theme/{theme}', function ($theme) {
-        if (in_array($theme, ['light', 'dark'])) {
+        if (in_array($theme, ['light', 'dark', 'system'])) {
             session(['theme' => $theme]);
         }
         return back();

@@ -15,4 +15,14 @@ class Delivery extends Model
 
     /** @use HasFactory<\Database\Factories\DeliveryFactory> */
     use HasFactory;
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function courier()
+    {
+        return $this->belongsTo(User::class, 'courier_id');
+    }
 }

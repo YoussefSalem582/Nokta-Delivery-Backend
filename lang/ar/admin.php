@@ -117,4 +117,5 @@ return [
     'export_success' => 'بدأ التصدير بنجاح.',
     'theme_dark' => 'الوضع الداكن',
     'theme_light' => 'الوضع الفاتح',
+    'theme_system' => 'إعدادات النظام',
 ];
