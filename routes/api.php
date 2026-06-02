@@ -24,11 +24,30 @@ Route::prefix('v1')->group(function () {
         Route::post('device-token', [AuthController::class, 'deviceToken']);
     });
 
-    // We can place the profile route outside v1 if following NestJS exactly (/api/profile),
-    // but the task says /api/profile
+    // Driver Routes (Simulated endpoints for Flutter map and dispatch)
+    Route::middleware(['auth:sanctum', 'role:DRIVER'])->prefix('driver')->group(function () {
+        Route::get('offers', [\App\Http\Controllers\Api\V1\DriverController::class, 'offers']);
+        Route::post('offers/{id}/accept', [\App\Http\Controllers\Api\V1\DriverController::class, 'acceptOffer']);
+        Route::post('offers/{id}/decline', [\App\Http\Controllers\Api\V1\DriverController::class, 'declineOffer']);
+    });
 });
 
-// Profile route (Protected) - NestJS had it at /api/profile
 Route::middleware('auth:sanctum')->group(function () {
+    // Profile
     Route::get('profile', [ProfileController::class, 'show']);
+
+    // Drivers
+    Route::get('drivers', [\App\Http\Controllers\Api\V1\DriverController::class, 'index']);
+
+    // Rides (Trips)
+    Route::prefix('trips')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Api\V1\TripController::class, 'index']);
+        Route::get('active', [\App\Http\Controllers\Api\V1\TripController::class, 'active']);
+        Route::post('request', [\App\Http\Controllers\Api\V1\TripController::class, 'requestRide']);
+        Route::get('{id}', [\App\Http\Controllers\Api\V1\TripController::class, 'show']);
+        Route::patch('{id}/status', [\App\Http\Controllers\Api\V1\TripController::class, 'updateStatus']);
+    });
+
+    // Alias for rides to match Flutter endpoint sometimes expected as 'rides/estimate-fare'
+    Route::post('rides/estimate-fare', [\App\Http\Controllers\Api\V1\TripController::class, 'estimateFare']);
 });
