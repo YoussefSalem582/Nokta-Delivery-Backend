@@ -13,7 +13,7 @@ class RideEvent extends Model
 
     protected $guarded = [];
 
-    public const UPDATED_AT = null;
+    public $timestamps = false;
 
     /** @use HasFactory<\Database\Factories\RideEventFactory> */
     use HasFactory;
