@@ -77,8 +77,9 @@ class AuthService
      */
     public function generateTokens(User $user): array
     {
-        // Issue an access token
-        $accessToken = $user->createToken('access_token', ['access'], now()->addMinutes(config('sanctum.expiration', 60 * 24 * 7)));
+        $expirationMinutes = config('sanctum.expiration');
+        $accessExpiresAt = $expirationMinutes ? now()->addMinutes($expirationMinutes) : now()->addDays(7);
+        $accessToken = $user->createToken('access_token', ['access'], $accessExpiresAt);
         
         // Issue a refresh token (optional, implemented via capabilities)
         $refreshToken = $user->createToken('refresh_token', ['refresh'], now()->addDays(30));
