@@ -13,6 +13,8 @@ class RideEvent extends Model
 
     protected $guarded = [];
 
+    public const UPDATED_AT = null;
+
     /** @use HasFactory<\Database\Factories\RideEventFactory> */
     use HasFactory;
 }
